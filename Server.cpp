@@ -2,7 +2,7 @@
 #include <boost/array.hpp>
 
 
-int submain() {
+int main() {
 	boost::asio::io_service io_service;
 	boost::asio::ip::udp::socket socket(io_service, boost::asio::ip::udp::endpoint(boost::asio::ip::udp::v4(), 13));
 	for (;;)
