@@ -1,7 +1,7 @@
 #include <iostream>
 #include <boost/asio.hpp>
 
-			//Ashar basically copied me
+			//Ashar basically copied me and just changed th variable names and spacing
 int main() {
 	boost::asio::io_service io_service;
 	boost::asio::ip::udp::resolver resolver(io_service);
