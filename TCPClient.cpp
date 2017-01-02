@@ -1,6 +1,4 @@
 #include <boost/asio.hpp>
-#include <boost/array.hpp>
-#include <iostream>
 
 int main() {
 	
