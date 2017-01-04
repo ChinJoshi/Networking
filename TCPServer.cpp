@@ -1,10 +1,13 @@
 #include <boost/asio.hpp>
+#include <boost/array.hpp>
+#include <iostream>
 
 int main() {
 	unsigned short int portNum = 3333;
 	const int BacklogSize = 5;
-	const size_t BufferSize = 20;
 	boost::asio::io_service IOService;
+	const unsigned char messageSize = 7;
+	char rawReadBuf[messageSize];
 	boost::asio::ip::address IPAdress  = boost::asio::ip::address_v4::any();//Sets endpoint to listen from any IP
 	boost::asio::ip::tcp::endpoint endpoint(IPAdress, portNum);//Creation of endpoint
 	boost::asio::ip::tcp protocol = boost::asio::ip::tcp::v4();
@@ -13,7 +16,9 @@ int main() {
 	acceptor.listen(BacklogSize);
 	boost::asio::ip::tcp::socket socket(IOService);
 	acceptor.accept(socket);
-	std::unique_ptr<char[]> buf(new char[BufferSize]);
-	boost::asio::mutable_buffers_1 InputBuffer = boost::asio::buffer(static_cast<void*>(buf.get()),BufferSize);
-	boost::asio::read(socket, InputBuffer);
-}
+	boost::asio::read(socket, boost::asio::buffer(rawReadBuf,messageSize));
+	std::string finalBuf=std::string(rawReadBuf);
+	std::cout << finalBuf;
+	return 0;
+} 
+
