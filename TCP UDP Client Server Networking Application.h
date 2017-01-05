@@ -1,5 +1,10 @@
+#include <opencv2/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
 #include <boost/asio.hpp>
 #include <iostream>
+#include <vector>
+
+
 
 namespace net {
 
@@ -19,7 +24,6 @@ namespace net {
 			portNum = preportNum;
 			std::cout << "FINAL ENDPOINT CREATED" << std::endl;
 		}
-
 	
 		void sendString(std::string rawBuffer) {
 			boost::system::error_code error;
@@ -42,7 +46,12 @@ namespace net {
 				std::cout << "BUFFER SUCCESFULLY WRITTEN TO SOCKET" << std::endl;
 			}
 		}
+		void sendMat() {
+			
+		}
 	};
+
+
 
 	class tcpSer {
 	public:
@@ -53,7 +62,7 @@ namespace net {
 		}
 		void recieveString() {
 			//std::vector<char> buffer;
-			char buffer[128];
+			std::vector <char> buffer(128);
 			boost::asio::ip::tcp::socket socket(io_service);
 			boost::asio::ip::tcp::endpoint endpoint(boost::asio::ip::address_v4::any(), portNum);
 			boost::asio::ip::tcp::acceptor acceptor(io_service, endpoint.protocol());
@@ -66,12 +75,13 @@ namespace net {
 			socket.receive(boost::asio::buffer(buffer));
 			std::cout << "READING FROM SOCKET TO BUFFER" << std::endl;
 			//std::string stringBuf = std::string(buffer.begin(), buffer.end());
-			std::string stringBuf = buffer;
+			std::string stringBuf = std::string(buffer.begin(),buffer.end());
 			std::cout << "CONVERTING BUFFER TO STRING" << std::endl;
 			std::cout << "PRINTING BUFFER" << std::endl;
 			std::cout << "RECIEVED MESSAGE: "<<stringBuf << std::endl;
 			std::cout << "PRINTING BUFFER" << std::endl;
 		}
+		
 	};
 
 
